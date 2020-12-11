@@ -51,3 +51,5 @@ The window on the left side of the screen displays the video captured by the pic
 It will show whther the person is wearing a mask or not. 
 The right side of the page has buttons that will be used to control the movement of the robot and also for audio broadcasting.
 
+
+https://robocar-video.herokuapp.com/d30a5dc7-7cdb-45ab-86cc-f91f54f792fd
