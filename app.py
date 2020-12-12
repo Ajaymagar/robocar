@@ -1,33 +1,56 @@
 
-from flask import Flask, Response , render_template
+from flask import Flask, Response , render_template , request
 import cv2
+import time
+#import RPi.GPIO as GPIO
+#mode=GPIO.getmode()
+
+#GPIO.cleanup()
+
+'''
+Forward=26
+Backward=20
+sleeptime=1
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(Forward, GPIO.OUT)
+GPIO.setup(Backward, GPIO.OUT)
+'''
 
 app = Flask(__name__)
 video = cv2.VideoCapture(0)
 
 face_cascade  = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-#maskNet = load_model('')
-@app.route('/')
-def index():
-    return render_template('index.html')
-'''
-def detectAndPredict():
-    locs = []
-    faces = []
-    preds = []
-    faces_in_image = face_cascade.detectMultiScale(frame , 1.3 ,5)
-    for (x , y , w,h) in faces_in_image:
-        locs.append(())
-    preds = maskNet.predict(faces)
 
-    return (locs , pred)
-'''
+@app.route('/',methods=['GET',"POST"])
+def index():
+    
+    if request.method == "POST":
+        slider = request.form.get('slider')
+        return render_template('index.html',slider=slider)
+        
+    return render_template('index.html')
+
+
+@app.route('/forward')
+def forward():
+    print('forwared')
+    return "True"
+
+
+@app.route('/stop')
+def stop():
+    print('stop')
+    return "True"
+
+
+
 def gen(video):
     while True:
         success, image = video.read()
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         faces_in_image = face_cascade.detectMultiScale(gray , 1.3 ,5)
-        print(faces_in_image)
+        #print(faces_in_image)
         for (x,y,w,h) in faces_in_image:
             cv2.rectangle(image , (x,y),(x+w,y+h),(0,255,0),2)
             break
